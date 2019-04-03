@@ -22,14 +22,9 @@ type GitRepository struct {
 // CreateRepository - creates directories and files necessary for a git repository
 func CreateRepository(workdir string) error {
 	var err error
-	// // Present Working Directory if "workdir" not specified
-	// if workdir == "" {
-	// 	workdir = "."
-	// }
 
-	gitdir := path.Join(workdir, ".git")
-
-	newRepo := GitRepository{workdir, gitdir}
+	gitdir := path.Join(workdir, ".git")      // ".git" directory
+	newRepo := GitRepository{workdir, gitdir} // New repo instance
 
 	// wDir - the specified worktree (directory), by default it's "." (pwd)
 	wDir, err := os.Stat(newRepo.workdir)
@@ -121,7 +116,7 @@ func CreateRepoConf(gitdir string) error {
 	return nil
 }
 
-// FindRepository - Finds repository (".git" file)
+// FindRepository - Finds repository (".git" folder)
 // Sometimes users current directory might not be the repo workdir
 // For those cases this function will find recursively find the .git directory going up on
 // on the directory tree
