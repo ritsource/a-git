@@ -36,9 +36,9 @@ func CreateRepository(workdir string) error {
 			// If we failed to create wDir
 			fmt.Println("Specified directory doesn't exist, Unable to even cretae new one,\n", err)
 			return cErr
-		} else {
-			fmt.Println("Specified directory doesn't exist, Created!")
 		}
+		fmt.Println("Specified directory doesn't exist, Created!")
+
 	} else {
 		// If wDir exist
 		isDir := wDir.IsDir()
@@ -48,7 +48,7 @@ func CreateRepository(workdir string) error {
 		}
 	}
 
-	os.Mkdir(newRepo.gitdir, 0777) // Create a ".git" directory
+	os.Mkdir(newRepo.gitdir, 0755) // Create a ".git" directory
 	err = CreateRepoConf(newRepo.gitdir)
 	err = CreateRepoDirs(newRepo.gitdir)
 
