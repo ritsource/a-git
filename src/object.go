@@ -19,7 +19,7 @@ import (
 type GitObject struct {
 	kind string
 	size string
-	data string
+	data []byte
 }
 
 // Write - writes compressed object files by calculating hashes as the filename (sha1)
@@ -116,7 +116,7 @@ func ReadObject(objectpath string) (GitObject, error) {
 	return GitObject{
 		kind: string(fData[:iSpace]),
 		size: string(fData[iSpace+1 : iNull]),
-		data: string(fData[iNull:]),
+		data: fData[iNull:],
 	}, nil
 
 }
