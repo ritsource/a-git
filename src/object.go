@@ -17,17 +17,17 @@ import (
 // size is total size of uncompressed data
 // data is the data, different structure for every type
 type GitObject struct {
-	kind string
-	size string
-	data []byte
+	Kind string
+	Size string
+	Data []byte
 }
 
 // Write - writes compressed object files by calculating hashes as the filename (sha1)
 func (obj GitObject) Write(gitdir string) error {
 	// GitObject kind, size, and data in []byte
-	bKind := []byte(obj.kind)
-	bSize := []byte(strconv.Itoa(len([]byte(obj.data)) - 1)) // -1 because it didn't match the experimental result
-	bData := []byte(obj.data)
+	bKind := []byte(obj.Kind)
+	bSize := []byte(strconv.Itoa(len([]byte(obj.Data)) - 1)) // -1 because it didn't match the experimental result
+	bData := []byte(obj.Data)
 
 	// Attatching the chunks
 	sl := [][]byte{bKind, []byte(" "), bSize, []byte{0x00}, bData}
@@ -114,9 +114,9 @@ func ReadObject(objectpath string) (GitObject, error) {
 	iNull := bytes.IndexByte(fData, byte(0x00)) // Index of 0x00 (null seperator) in file data
 
 	return GitObject{
-		kind: string(fData[:iSpace]),
-		size: string(fData[iSpace+1 : iNull]),
-		data: fData[iNull:],
+		Kind: string(fData[:iSpace]),
+		Size: string(fData[iSpace+1 : iNull]),
+		Data: fData[iNull:],
 	}, nil
 
 }

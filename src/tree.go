@@ -8,9 +8,9 @@ import (
 
 // GitTreeLeaf ...
 type GitTreeLeaf struct {
-	mode  string
-	fpath string
-	sha   string
+	Mode  string
+	Fpath string
+	Sha   string
 }
 
 // GitTree ...
@@ -58,9 +58,9 @@ func ParseTreeLeaf(raw []byte, counter int, pos *int) GitTreeLeaf {
 	*pos = y + 21
 
 	return GitTreeLeaf{
-		mode:  string(mode),
-		fpath: string(fpath),
-		sha:   shaStr,
+		Mode:  string(mode),
+		Fpath: string(fpath),
+		Sha:   shaStr,
 	}
 }
 

@@ -15,8 +15,8 @@ import (
 
 // GitRepository - Repository type
 type GitRepository struct {
-	workdir string
-	gitdir  string
+	Workdir string
+	Gitdir  string
 }
 
 // CreateRepository - creates directories and files necessary for a git repository
@@ -27,11 +27,11 @@ func CreateRepository(workdir string) error {
 	newRepo := GitRepository{workdir, gitdir} // New repo instance
 
 	// wDir - the specified worktree (directory), by default it's "." (pwd)
-	wDir, err := os.Stat(newRepo.workdir)
+	wDir, err := os.Stat(newRepo.Workdir)
 
 	if os.IsNotExist(err) {
 		// If wDir doesn't exist
-		cErr := os.Mkdir(newRepo.workdir, 0777)
+		cErr := os.Mkdir(newRepo.Workdir, 0777)
 		if cErr != nil {
 			// If we failed to create wDir
 			fmt.Println("Specified directory doesn't exist, Unable to even cretae new one,\n", err)
@@ -48,13 +48,13 @@ func CreateRepository(workdir string) error {
 		}
 	}
 
-	os.Mkdir(newRepo.gitdir, 0755) // Create a ".git" directory
-	err = CreateRepoConf(newRepo.gitdir)
-	err = CreateRepoDirs(newRepo.gitdir)
+	os.Mkdir(newRepo.Gitdir, 0755) // Create a ".git" directory
+	err = CreateRepoConf(newRepo.Gitdir)
+	err = CreateRepoDirs(newRepo.Gitdir)
 
 	if err != nil {
 		// Remove the whole ".git" folder if some error
-		os.RemoveAll(path.Join(newRepo.gitdir))
+		os.RemoveAll(path.Join(newRepo.Gitdir))
 		fmt.Println("Failed to initialize repository")
 		fmt.Println(err)
 	}
@@ -135,7 +135,7 @@ func FindRepository(currentdir string) (GitRepository, error) {
 	if err == nil {
 		isGitDir := gDir.IsDir()
 		if isGitDir {
-			return GitRepository{workdir: currentdir, gitdir: gitdir}, nil
+			return GitRepository{Workdir: currentdir, Gitdir: gitdir}, nil
 		}
 	}
 

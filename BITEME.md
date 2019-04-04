@@ -1,50 +1,50 @@
 # Commands
 
 
-## a-git init
+## - [x] a-git init
 Initializes a git repository
 
-## a-git add
+## - [x] a-git add
 Creates Blob and Tree objects
 
-## a-git rm
+## - [x] a-git rm
 Deleted Blob and Tree objects
 
-## a-git status
+## - [x] a-git status
 Shows all files untracked (Hard One)
 
-## a-git commit
+## - [x] a-git commit
 Creates a Commit object
 
-## a-git log
+## - [x] a-git log
 Shows Commit history
 
-## a-git ls-tree
+## - [x] a-git ls-tree
 Shows the contents of a Tree object
 
-## a-git tag
+## - [x] a-git tag
 Create, list, delete or verify a tag object signed with GPG
 
-## a-git branch
+## - [x] a-git branch
 Creates a new Branch & All
 
-## a-git merge
+## - [x] a-git merge
 Merges (wht-eve) two branches
 
-## a-git rebase
+## - [x] a-git rebase
 Reapply Commits on top of another base tip
 
-## a-git rev-parse
+## - [x] a-git rev-parse
 Pick out and massage parameters
 
-## a-git show-ref
+## - [x] a-git show-ref
 List references in a local repository
 
-## a-git checout
+## - [x] a-git checout
 Change Branches (Hard)
 
-## a-git cat-file
+## - [x] a-git cat-file
 Show Details about objects
 
-## a-git hash-object
+## - [x] a-git hash-object
 Compute object ID from a givn blob
