@@ -1,16 +1,14 @@
-# Initialize repo with "a-git init" command
-./a-git init
-
-# Assert if repo has been created or not
-git status
+# Test
+go test src/tree_test.go
 if [ $? -eq 0 ]; then
     RESULT=true
 else
     RESULT=false
 fi
 
+
 # Printing result
-echo -e "\e[1mTesting \"a-git init\" cmd"
+echo -e "\e[1mUnit tests - \"tree_test.go\" :)"
 if [ "$RESULT" != false ]; then
     echo -e "\e[32m\e[1mPASS :)"
 else

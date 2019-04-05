@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path"
+	"path/filepath"
 	"strconv"
 )
 
@@ -23,7 +24,7 @@ type GitObject struct {
 }
 
 // Write - writes compressed object files by calculating hashes as the filename (sha1)
-func (obj GitObject) Write(gitdir string) error {
+func (obj GitObject) Write(gitdir string) (string, error) {
 	// GitObject kind, size, and data in []byte
 	bKind := []byte(obj.Kind)
 	bSize := []byte(strconv.Itoa(len([]byte(obj.Data)) - 1)) // -1 because it didn't match the experimental result
@@ -44,13 +45,19 @@ func (obj GitObject) Write(gitdir string) error {
 	// Creating directory for with first two values of "shaStr"
 	err := os.MkdirAll(path.Join(gitdir, "objects", shaStr[:2]), 0777)
 	if err != nil {
-		return err
+		return "", err
+	}
+
+	// Absolute Path to the written file
+	nFilePath, err := filepath.Abs(path.Join(gitdir, "objects", shaStr[:2], shaStr[2:]))
+	if err != nil {
+		return "", err
 	}
 
 	// Creating new file with the content
-	nFile, err := os.Create(path.Join(gitdir, "objects", shaStr[:2], shaStr[2:]))
+	nFile, err := os.Create(nFilePath)
 	if err != nil {
-		return err
+		return "", err
 	}
 	defer nFile.Close()
 
@@ -63,10 +70,10 @@ func (obj GitObject) Write(gitdir string) error {
 	// Writing compressed content in "nFile", the newly created file
 	_, err = nFile.Write(b.Bytes())
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return nil
+	return nFilePath, nil
 }
 
 // ReadObjectFile - Reads the object file compressed data, returns uncompressed content
