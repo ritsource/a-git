@@ -36,7 +36,7 @@ func TestTreeWriteAndRead(t *testing.T) {
 	rTree := src.ParseTree(rObject.Data)
 
 	// Comparing read tree with base tree
-	if !reflect.DeepEqual(readTree, bTree) {
+	if !reflect.DeepEqual(rTree, bTree) {
 		t.Error("Not Match!", "\n\n", rTree, "\n\n", bTree)
 	}
 }

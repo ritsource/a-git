@@ -45,7 +45,7 @@ var catFileCmd = &cobra.Command{
 				PrintTreeObject(object.Data, gitrepo.Gitdir)
 
 			} else if object.Kind == "blob" {
-				fmt.Printf("%+s\n", object.Data)
+				fmt.Printf("%+s", object.Data)
 
 			} else if object.Kind == "commit" {
 				fmt.Printf("%+s", object.Data)

@@ -10,6 +10,4 @@ COPY ./a-git .
 COPY ./tests ./tests
 COPY ./src ./src
 
-RUN ls
-
 CMD ["bash", "./tests/runner.sh"]

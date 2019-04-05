@@ -40,6 +40,7 @@ var lsTreeCmd = &cobra.Command{
 				os.Exit(1)
 			}
 
+			// Print the formatted tree
 			PrintTreeObject(object.Data, gitrepo.Gitdir)
 
 		}
