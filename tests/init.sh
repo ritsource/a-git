@@ -9,4 +9,6 @@ else
     echo -e "\e[31mFAIL :("
 fi
 
+echo -e "\e[0m==================>"
+
 rm -rf .git

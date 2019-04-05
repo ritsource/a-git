@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"encoding/hex"
 	"fmt"
 	"os"
 	"path"
@@ -44,15 +45,18 @@ var lsTreeCmd = &cobra.Command{
 
 			// Iretate over "tree" and print expected results
 			for _, t := range tree {
+				// String representation of t.Sha
+				shaStr := hex.EncodeToString(t.Sha)
+
 				// Reading other object references to extract object type
-				refObj, err := src.ReadObject(path.Join(gitrepo.Gitdir, "objects", t.Sha[:2], t.Sha[2:]))
+				refObj, err := src.ReadObject(path.Join(gitrepo.Gitdir, "objects", shaStr[:2], shaStr[2:]))
 				if err != nil {
 					fmt.Println("Error:", err)
 					os.Exit(1)
 				}
 
 				// Formatted output
-				output := t.Mode + "\t" + refObj.Kind + " " + t.Sha + "\t" + t.Fpath
+				output := t.Mode + "\t" + refObj.Kind + " " + shaStr + "\t" + t.Fpath
 				fmt.Println(output)
 			}
 		}

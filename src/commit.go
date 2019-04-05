@@ -2,12 +2,12 @@ package src
 
 // GitCommit ...
 type GitCommit struct {
-	size      string
-	tree      string
-	parent    string
-	author    string
-	committer string
-	message   string
+	Size      string
+	Tree      string
+	Parent    string
+	Author    string
+	Committer string
+	Message   string
 }
 
 // Create ...

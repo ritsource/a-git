@@ -2,15 +2,13 @@ package src
 
 import (
 	"bytes"
-	"crypto/sha1"
-	"encoding/hex"
 )
 
 // GitTreeLeaf ...
 type GitTreeLeaf struct {
 	Mode  string
 	Fpath string
-	Sha   string
+	Sha   []byte
 }
 
 // GitTree ...
@@ -40,10 +38,10 @@ func ReadTree(treedata []byte) GitTree {
 // This function parses and returns GitTreeLeaf for each Record
 func ParseTreeLeaf(raw []byte, counter int, pos *int) GitTreeLeaf {
 	// fmt.Println(string(raw))
-	// 0x00 [mode] space [path] 0x00 [sha-1] => Structure of a Tree Leaf (One Record in Tree Object)
+	// [mode] space [path] 0x00 [sha-1] => Structure of a Tree Leaf (One Record in Tree Object)
 	// in this function "x" = "space index", and "y" = "null index (0x00)"
 	x := IndexBytesByIndex(raw, byte(' '), counter) // Finding the ' ' (according to counter)
-	y := IndexBytesByIndex(raw, 0x00, counter+1)
+	y := IndexBytesByIndex(raw, 0x00, counter)
 
 	// Find "Mode" from start to byte(' ')
 	mode := raw[*pos:x]
@@ -52,7 +50,8 @@ func ParseTreeLeaf(raw []byte, counter int, pos *int) GitTreeLeaf {
 	fpath := raw[x+1 : y] // fpath not to confuse with path library
 
 	// Decode "Sha" from 20 byte Binary (Sha is encoded in binary in Git Tree Object)
-	shaStr := hex.EncodeToString(raw[y+1 : y+21])
+	sha := raw[y+1 : y+21]
+	// shaStr := hex.EncodeToString(raw[y+1 : y+21])
 
 	// Setting posiition to the end of encoded sha, (end of current record)
 	*pos = y + 21
@@ -60,7 +59,7 @@ func ParseTreeLeaf(raw []byte, counter int, pos *int) GitTreeLeaf {
 	return GitTreeLeaf{
 		Mode:  string(mode),
 		Fpath: string(fpath),
-		Sha:   shaStr,
+		Sha:   sha,
 	}
 }
 
@@ -82,17 +81,4 @@ func IndexBytesByIndex(b []byte, k byte, i int) int {
 
 		return false
 	})
-}
-
-// ReadSingleRecord ...
-func ReadSingleRecord(raw []byte, pos int) (string, int) {
-	iNull := IndexBytesByIndex(raw, 0x00, 1)
-	// fmt.Println("Data", string(raw[iNull:]))
-
-	h := sha1.New()
-	h.Write(raw[iNull:])
-	shaStr := hex.EncodeToString(h.Sum(nil))
-	// fmt.Println("sha:", shaStr)
-
-	return shaStr, iNull + 21
 }

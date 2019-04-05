@@ -110,13 +110,13 @@ func ReadObject(objectpath string) (GitObject, error) {
 
 	// fmt.Printf("content:\n%+s\n", fData)
 
-	iSpace := bytes.IndexByte(fData, byte(' ')) // Index of ' ' (rune) in file data
-	iNull := bytes.IndexByte(fData, byte(0x00)) // Index of 0x00 (null seperator) in file data
+	x := bytes.IndexByte(fData, byte(' '))  // Index of ' ' (rune) in file data
+	y := bytes.IndexByte(fData, byte(0x00)) // Index of 0x00 (null seperator) in file data
 
 	return GitObject{
-		Kind: string(fData[:iSpace]),
-		Size: string(fData[iSpace+1 : iNull]),
-		Data: fData[iNull:],
+		Kind: string(fData[:x]),
+		Size: string(fData[x+1 : y]),
+		Data: fData[y+1:],
 	}, nil
 
 }
