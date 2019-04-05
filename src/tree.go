@@ -37,8 +37,8 @@ func (tree GitTree) Write(gitdir string) (string, error) {
 	return nFilePath, err
 }
 
-// ReadTree - Reads tree object data and returns an array of records ([]GitTreeLeaf)
-func ReadTree(treedata []byte) GitTree {
+// ParseTree - Reads tree object data and returns an array of records ([]GitTreeLeaf)
+func ParseTree(treedata []byte) GitTree {
 	pos := 0             // "pos" is used to track the position of each treeleaf's (record's) start
 	counter := 0         // Counter is used to track the index of treeleaf (each record)
 	max := len(treedata) // End of treelear data

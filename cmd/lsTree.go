@@ -40,29 +40,37 @@ var lsTreeCmd = &cobra.Command{
 				os.Exit(1)
 			}
 
-			// (Else) read the tree object
-			tree := src.ReadTree(object.Data)
+			PrintTreeObject(object.Data, gitrepo.Gitdir)
 
-			// Iretate over "tree" and print expected results
-			for _, t := range tree {
-				// String representation of t.Sha
-				shaStr := hex.EncodeToString(t.Sha)
-
-				// Reading other object references to extract object type
-				refObj, err := src.ReadObject(path.Join(gitrepo.Gitdir, "objects", shaStr[:2], shaStr[2:]))
-				if err != nil {
-					fmt.Println("Error:", err)
-					os.Exit(1)
-				}
-
-				// Formatted output
-				output := t.Mode + "\t" + refObj.Kind + " " + shaStr + "\t" + t.Fpath
-				fmt.Println(output)
-			}
 		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(lsTreeCmd)
+}
+
+// Reusable Functions
+
+// PrintTreeObject - Prints formatted tree content
+func PrintTreeObject(data []byte, gitdir string) {
+	// (Else) read the tree object
+	tree := src.ParseTree(data)
+
+	// Iretate over "tree" and print expected results
+	for _, t := range tree {
+		// String representation of t.Sha
+		shaStr := hex.EncodeToString(t.Sha)
+
+		// Reading other object references to extract object type
+		refObj, err := src.ReadObject(path.Join(gitdir, "objects", shaStr[:2], shaStr[2:]))
+		if err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
+		// Formatted output
+		output := t.Mode + "\t" + refObj.Kind + " " + shaStr + "\t" + t.Fpath
+		fmt.Println(output)
+	}
 }

@@ -20,7 +20,7 @@ func TestTreeWriteAndRead(t *testing.T) {
 	}
 
 	// Base Tree
-	bTree := src.ReadTree(bObj.Data)
+	bTree := src.ParseTree(bObj.Data)
 
 	// Writing new Tree Object
 	// nFilePath = new file path
@@ -33,10 +33,10 @@ func TestTreeWriteAndRead(t *testing.T) {
 	}
 
 	// Extracting Tree from new tree object
-	readTree := src.ReadTree(rObject.Data)
+	rTree := src.ParseTree(rObject.Data)
 
 	// Comparing read tree with base tree
 	if !reflect.DeepEqual(readTree, bTree) {
-		t.Error("Not Match!", "\n\n", readTree, "\n\n", bTree)
+		t.Error("Not Match!", "\n\n", rTree, "\n\n", bTree)
 	}
 }
