@@ -33,8 +33,12 @@ func (tree GitTree) Write(gitdir string) (string, error) {
 	wObj := GitObject{Kind: "tree", Data: raw}
 
 	// Writing the Object
-	nFilePath, err := wObj.Write("git")
-	return nFilePath, err
+	// nFilePath, err := wObj.Write("git")
+	// return nFilePath, err
+
+	// Writing the Object
+	shaStr, err := wObj.Write("git")
+	return shaStr, err
 }
 
 // ParseTree - Reads tree object data and returns an array of records ([]GitTreeLeaf)

@@ -1,6 +1,8 @@
 package src_test
 
 import (
+	"path"
+	"path/filepath"
 	"reflect"
 	"testing"
 
@@ -24,12 +26,12 @@ func TestTreeWriteAndRead(t *testing.T) {
 
 	// Writing new Tree Object
 	// nFilePath = new file path
-	nFilePath, err := bTree.Write("git")
+	shaStr, err := bTree.Write("git")
 
 	// Reading newly created object
-	rObject, err := src.ReadObject(nFilePath) // "../tests/fixtures/tree1"
+	rObject, err := src.ReadObject(path.Join("git", "objects", shaStr[:2], shaStr[2:])) // "../tests/fixtures/tree1"
 	if err != nil {
-		t.Error(err)
+		t.Error(filepath.Abs(path.Join("git", "objects", shaStr[:2], shaStr[2:])))
 	}
 
 	// Extracting Tree from new tree object

@@ -73,7 +73,8 @@ func (obj GitObject) Write(gitdir string) (string, error) {
 		return "", err
 	}
 
-	return nFilePath, nil
+	// return nFilePath, nil
+	return shaStr, nil
 }
 
 // ReadObjectFile - Reads the object file compressed data, returns uncompressed content
