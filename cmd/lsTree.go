@@ -34,6 +34,7 @@ var lsTreeCmd = &cobra.Command{
 				fmt.Println(err)
 				os.Exit(1)
 			}
+
 			// if object kind is not tree (some other kind of object)
 			if object.Kind != "tree" {
 				fmt.Println(args[0] + " is not a tree object")
