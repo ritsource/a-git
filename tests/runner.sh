@@ -16,3 +16,7 @@ bash tests/catFile.sh
 # Running unit tests inside docker
 # tree_test.go
 bash tests/unit_tests/tree_test.sh
+
+# Running unit tests inside docker
+# commit_.go
+bash tests/unit_tests/commit_test.sh
